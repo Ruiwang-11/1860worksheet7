@@ -3,9 +3,26 @@ CHIP DecoderSegment201890224 {
     OUT b;
 
     PARTS:
-    AND(a1 = !A, a2 = !C, a3 = D, out = and1);
-    AND(a1 = !A, a2 = B, out = and2);
-    AND(a1 = A, a2 = !B, a3 = D, out = and3);
-    AND(a1 = A, a2 = C, out = and4);
-    OR(a1 = and1, a2 = and2, a3 = and3, a4 = and4, out = b);
+    // and1 = !A * !C * D
+    Not(in=A, out=notA);
+    Not(in=C, out=notC);
+    And(a=notA, b=notC, out=and1_temp);
+    And(a=and1_temp, b=D, out=and1);
+
+    // and2 = !A * B
+    And(a=notA, b=B, out=and2);
+
+    // and3 = A * !B * D
+    Not(in=B, out=notB);
+    And(a=A, b=notB, out=and3_temp);
+    And(a=and3_temp, b=D, out=and3);
+
+    // and4 = A * C
+    And(a=A, b=C, out=and4);
+
+    // OR gate to combine all conditions
+    Or(a=and1, b=and2, out=or1);
+    Or(a=or1, b=and3, out=or2);
+    Or(a=or2, b=and4, out=b);
 }
+
