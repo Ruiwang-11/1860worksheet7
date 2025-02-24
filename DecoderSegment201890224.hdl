@@ -3,7 +3,7 @@ CHIP DecoderSegment201890224 {
     OUT b;
 
     PARTS:
-    // 生成 NOT 信号
+    // 计算 NOT
     Not(in=A, out=notA);
     Not(in=B, out=notB);
     Not(in=C, out=notC);
@@ -22,7 +22,7 @@ CHIP DecoderSegment201890224 {
     // 计算 and4 = A * C
     And(a=A, b=C, out=and4);
 
-    // OR 门组合所有条件
+    // 组合 OR 门
     Or(a=and1, b=and2, out=temp3);
     Or(a=temp3, b=and3, out=temp4);
     Or(a=temp4, b=and4, out=b);
