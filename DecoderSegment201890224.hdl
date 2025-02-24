@@ -1,22 +1,8 @@
-CHIP DecoderSegment201890224 {
+CHIP DecoderSegment201890722 {
     IN A, B, C, D;
     OUT b;
 
-PARTS:
-    // NOT gates (inverting inputs)
-    Not(in=A, out=NOTA);
-    Not(in=B, out=NOTB);
-    Not(in=C, out=NOTC);
-    Not(in=D, out=NOTD);
-
-    // AND gates for Boolean terms
-    And(a=NOTA, b=NOTC, out=TERM1);   // A'C'
-    And(a=NOTA, b=D, out=TERM2);       // A'D
-    And(a=NOTB, b=C, out=TERM3);       // B'C
-    And(a=B, b=NOTD, out=TERM4);       // BD'
-
-    // OR gates to combine terms
-    Or(a=TERM1, b=TERM2, out=PARTIAL1);
-    Or(a=PARTIAL1, b=TERM3, out=PARTIAL2);
-    Or(a=PARTIAL2, b=TERM4, out=b);  // Final output for segment b
+    PARTS:
+    // 
+    b = (NOT A AND NOT B AND NOT C) OR (NOT A AND B AND NOT C) OR (A AND NOT B AND NOT C) OR (A AND B AND C);
 }
