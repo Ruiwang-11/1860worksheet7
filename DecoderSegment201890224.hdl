@@ -1,27 +1,11 @@
 CHIP DecoderSegment201890224 {
-    IN A, B, C, D;
-    OUT b;
-
-    PARTS:
-    // 计算所有 NOT
-    Not(in=A, out=notA);
-    Not(in=B, out=notB);
-    Not(in=C, out=notC);
-    Not(in=D, out=notD);
-
-    // 计算 AND 组合
-    And(a=notA, b=notC, out=and1_temp);
-    And(a=and1_temp, b=D, out=and1); // and1 = !A * !C * D
-
-    And(a=notA, b=B, out=and2); // and2 = !A * B
-
-    And(a=A, b=notB, out=and3_temp);
-    And(a=and3_temp, b=D, out=and3); // and3 = A * !B * D
-
-    And(a=A, b=C, out=and4); // and4 = A * C
-
-    // 计算 OR 组合
-    Or(a=and1, b=and2, out=or1);
-    Or(a=or1, b=and3, out=or2);
-    Or(a=or2, b=and4, out=b); // b = and1 + and2 + and3 + and4
+    IN A, B, C, D;
+    OUT b;
+    PARTS:
+    Not(in=A, out=notA);
+    Not(in=D, out=notD);
+    And(a=notA, b=C, out=and1);
+    And(a=notA, b=notD, out=and2);
+    Or(a=and1, b=B, out=or1);
+    Or(a=or1, b=and2, out=b);
 }
