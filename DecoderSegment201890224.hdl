@@ -58,12 +58,12 @@ CHIP DecoderSegment201890224 {
     And(a=nC, b=nD, out=t19);
     And(a=t18, b=t19, out=t9);
 
-    // t10 = 1110
+    // t10 = 1110（修改为 t22 避免冲突）
     And(a=A, b=B, out=t20);
     And(a=C, b=nD, out=t21);
-    And(a=t20, b=t21, out=t10);
+    And(a=t20, b=t21, out=t22);
 
-    // 汇总 OR
+    // 汇总 OR（注意最后用的是 t22）
     Or(a=t0, b=t1, out=o1);
     Or(a=o1, b=t2, out=o2);
     Or(a=o2, b=t3, out=o3);
@@ -73,5 +73,4 @@ CHIP DecoderSegment201890224 {
     Or(a=o6, b=t7, out=o7);
     Or(a=o7, b=t8, out=o8);
     Or(a=o8, b=t9, out=o9);
-    Or(a=o9, b=t10, out=b);
-}
+    Or(a=o9, b=t22, out=b);
