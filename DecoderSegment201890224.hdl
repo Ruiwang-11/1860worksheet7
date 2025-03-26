@@ -8,64 +8,77 @@ CHIP DecoderSegment201890224 {
     Not(in=C, out=nC);
     Not(in=D, out=nD);
 
-    // m0: 0000
-    And(a=nA, b=nB, out=w0);
-    And(a=nC, b=nD, out=w1);
-    And(a=w0, b=w1, out=m0);
+    // === 显式列出所有组合 ===
 
-    // m2: 0010
-    And(a=nA, b=nB, out=w2);
-    And(a=C, b=nD, out=w3);
-    And(a=w2, b=w3, out=m2);
+    // -- 输出为 1 的组合 --
 
-    // m3: 0011
-    And(a=nA, b=nB, out=w4);
-    And(a=C, b=D, out=w5);
-    And(a=w4, b=w5, out=m3);
+    // 0000 = 0
+    And(a=nA, b=nB, out=w0_1);
+    And(a=nC, b=nD, out=w0_2);
+    And(a=w0_1, b=w0_2, out=m0);
 
-    // m5: 0101
-    And(a=nA, b=B, out=w6);
-    And(a=nC, b=D, out=w7);
-    And(a=w6, b=w7, out=m5);
+    // 0010 = 2
+    And(a=nA, b=nB, out=w2_1);
+    And(a=C, b=nD, out=w2_2);
+    And(a=w2_1, b=w2_2, out=m2);
 
-    // m6: 0110
-    And(a=nA, b=B, out=w8);
-    And(a=C, b=nD, out=w9);
-    And(a=w8, b=w9, out=m6);
+    // 0011 = 3
+    And(a=nA, b=nB, out=w3_1);
+    And(a=C, b=D, out=w3_2);
+    And(a=w3_1, b=w3_2, out=m3);
 
-    // m8: 1000
-    And(a=A, b=nB, out=w10);
-    And(a=nC, b=nD, out=w11);
-    And(a=w10, b=w11, out=m8);
+    // 0101 = 5
+    And(a=nA, b=B, out=w5_1);
+    And(a=nC, b=D, out=w5_2);
+    And(a=w5_1, b=w5_2, out=m5);
 
-    // m9: 1001
-    And(a=A, b=nB, out=w12);
-    And(a=nC, b=D, out=w13);
-    And(a=w12, b=w13, out=m9);
+    // 0110 = 6
+    And(a=nA, b=B, out=w6_1);
+    And(a=C, b=nD, out=w6_2);
+    And(a=w6_1, b=w6_2, out=m6);
 
-    // m10: 1010
-    And(a=A, b=nB, out=w14);
-    And(a=C, b=nD, out=w15);
-    And(a=w14, b=w15, out=m10);
+    // 1000 = 8
+    And(a=A, b=nB, out=w8_1);
+    And(a=nC, b=nD, out=w8_2);
+    And(a=w8_1, b=w8_2, out=m8);
 
-    // m12: 1100
-    And(a=A, b=B, out=w16);
-    And(a=nC, b=nD, out=w17);
-    And(a=w16, b=w17, out=m12);
+    // 1001 = 9
+    And(a=A, b=nB, out=w9_1);
+    And(a=nC, b=D, out=w9_2);
+    And(a=w9_1, b=w9_2, out=m9);
 
-    // m14: 1110
-    And(a=A, b=B, out=w18);
-    And(a=C, b=nD, out=w19);
-    And(a=w18, b=w19, out=m14);
+    // 1010 = A
+    And(a=A, b=nB, out=wA_1);
+    And(a=C, b=nD, out=wA_2);
+    And(a=wA_1, b=wA_2, out=mA);
 
-    // OR 所有有效 minterms
+    // 1100 = C
+    And(a=A, b=B, out=wC_1);
+    And(a=nC, b=nD, out=wC_2);
+    And(a=wC_1, b=wC_2, out=mC);
+
+    // 1110 = E
+    And(a=A, b=B, out=wE_1);
+    And(a=C, b=nD, out=wE_2);
+    And(a=wE_1, b=wE_2, out=mE);
+
+    // Combine all outputs
     Or(a=m0, b=m2, out=o1);
     Or(a=o1, b=m3, out=o2);
     Or(a=o2, b=m5, out=o3);
     Or(a=o3, b=m6, out=o4);
     Or(a=o4, b=m8, out=o5);
     Or(a=o5, b=m9, out=o6);
-    Or(a=o6, b=m10, out=o7);
-    Or(a=o7, b=m12, out=o8);
-    Or(a=o8, b=m14, out=b);
+    Or(a=o6, b=mA, out=o7);
+    Or(a=o7, b=mC, out=o8);
+    Or(a=o8, b=mE, out=b);
+
+    // -- 输出为 0 的组合（这些不需要接线，只注释说明） --
+
+    // 0001 = 1 -> b = 0
+    // 0100 = 4 -> b = 0
+    // 0111 = 7 -> b = 0
+    // 1011 = B -> b = 0
+    // 1101 = D -> b = 0
+    // 1111 = F -> b = 0
 }
