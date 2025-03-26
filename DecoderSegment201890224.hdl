@@ -3,12 +3,27 @@ CHIP DecoderSegment201890224 {
     OUT b;
 
     PARTS:
-    Not(in=A, out=notA);
-    Not(in=D, out=notD);
+    Not(in=A, out=nA);
+    Not(in=B, out=nB);
+    Not(in=C, out=nC);
+    Not(in=D, out=nD);
 
-    And(a=notA, b=C, out=and1);
-    And(a=notA, b=notD, out=and2);
+    // 对应11个为1的输入
+    And4(a=nA, b=nB, c=nC, d=nD, out=t0);   // 0000
+    And4(a=nA, b=nB, c=C,  d=nD, out=t1);   // 0010
+    And4(a=nA, b=nB, c=C,  d=D,  out=t2);   // 0011
+    And4(a=nA, b=B,  c=nC, d=D,  out=t3);   // 0101
+    And4(a=nA, b=B,  c=C,  d=nD, out=t4);   // 0110
+    And4(a=nA, b=B,  c=C,  d=D,  out=t5);   // 0111
+    And4(a=A,  b=nB, c=nC, d=nD, out=t6);   // 1000
+    And4(a=A,  b=nB, c=nC, d=D,  out=t7);   // 1001
+    And4(a=A,  b=nB, c=C,  d=nD, out=t8);   // 1010
+    And4(a=A,  b=B,  c=nC, d=nD, out=t9);   // 1100
+    And4(a=A,  b=B,  c=C,  d=nD, out=t10);  // 1110
 
-    Or(a=and1, b=B, out=or1);
-    Or(a=or1, b=and2, out=b);
+    // 合并所有 or
+    Or8Way(in[0]=t0, in[1]=t1, in[2]=t2, in[3]=t3, in[4]=t4, in[5]=t5, in[6]=t6, in[7]=t7, out=or1);
+    Or3Way(in[0]=t8, in[1]=t9, in[2]=t10, out=or2);
+    Or(a=or1, b=or2, out=b);
 }
+
