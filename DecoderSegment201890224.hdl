@@ -74,3 +74,4 @@ CHIP DecoderSegment201890224 {
     Or(a=o7, b=t8, out=o8);
     Or(a=o8, b=t9, out=o9);
     Or(a=o9, b=t22, out=b);
+}
