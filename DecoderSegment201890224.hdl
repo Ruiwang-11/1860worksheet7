@@ -4,10 +4,70 @@ CHIP DecoderSegment201890224 {
     OUT b;
 
     PARTS:
-    Not(in=A, out=notA);
-    Not(in=D, out=notD);
-    And(a=notA, b=C, out=and1);
-    And(a=notA, b=notD, out=and2);
-    Or(a=and1, b=B, out=or1);
-    Or(a=or1, b=and2, out=b);
+    // 中间变量
+    Not(in=A, out=na);
+    Not(in=B, out=nb);
+    Not(in=C, out=nc);
+    Not(in=D, out=nd);
+
+    // term0: A=0 B=0 C=0 D=0 (0000)
+    And(a=na, b=nb, out=t0_1);
+    And(a=nc, b=nd, out=t0_2);
+    And(a=t0_1, b=t0_2, out=term0);
+
+    // term1: 0001
+    And(a=na, b=nb, out=t1_1);
+    And(a=nc, b=D, out=t1_2);
+    And(a=t1_1, b=t1_2, out=term1);
+
+    // term2: 0010
+    And(a=na, b=nb, out=t2_1);
+    And(a=C, b=nd, out=t2_2);
+    And(a=t2_1, b=t2_2, out=term2);
+
+    // term3: 0011
+    And(a=na, b=nb, out=t3_1);
+    And(a=C, b=D, out=t3_2);
+    And(a=t3_1, b=t3_2, out=term3);
+
+    // term4: 0100
+    And(a=na, b=B, out=t4_1);
+    And(a=nc, b=nd, out=t4_2);
+    And(a=t4_1, b=t4_2, out=term4);
+
+    // term7: 0111
+    And(a=na, b=B, out=t7_1);
+    And(a=C, b=D, out=t7_2);
+    And(a=t7_1, b=t7_2, out=term7);
+
+    // term8: 1000
+    And(a=A, b=nb, out=t8_1);
+    And(a=nc, b=nd, out=t8_2);
+    And(a=t8_1, b=t8_2, out=term8);
+
+    // term9: 1001
+    And(a=A, b=nb, out=t9_1);
+    And(a=nc, b=D, out=t9_2);
+    And(a=t9_1, b=t9_2, out=term9);
+
+    // term10: 1010
+    And(a=A, b=nb, out=t10_1);
+    And(a=C, b=nd, out=t10_2);
+    And(a=t10_1, b=t10_2, out=term10);
+
+    // term13: 1101
+    And(a=A, b=B, out=t13_1);
+    And(a=nc, b=D, out=t13_2);
+    And(a=t13_1, b=t13_2, out=term13);
+
+    // 把所有为1的term用 OR 拼起来
+    Or(a=term0, b=term1, out=o1);
+    Or(a=o1, b=term2, out=o2);
+    Or(a=o2, b=term3, out=o3);
+    Or(a=o3, b=term4, out=o4);
+    Or(a=o4, b=term7, out=o5);
+    Or(a=o5, b=term8, out=o6);
+    Or(a=o6, b=term9, out=o7);
+    Or(a=o7, b=term10, out=o8);
+    Or(a=o8, b=term13, out=b);
 }
