@@ -53,10 +53,15 @@ CHIP DecoderSegment201890224 {
     And(a=nC, b=nD, out=w17);
     And(a=w16, b=w17, out=m12);
 
-    // m14: 1110
+    // m13: 1101 ← 最关键补上的正确逻辑！
     And(a=A, b=B, out=w18);
-    And(a=C, b=nD, out=w19);
-    And(a=w18, b=w19, out=m14);
+    And(a=nC, b=D, out=w19);
+    And(a=w18, b=w19, out=m13);
+
+    // m14: 1110
+    And(a=A, b=B, out=w20);
+    And(a=C, b=nD, out=w21);
+    And(a=w20, b=w21, out=m14);
 
     // OR 所有有效 minterms
     Or(a=m0, b=m2, out=o1);
@@ -67,5 +72,6 @@ CHIP DecoderSegment201890224 {
     Or(a=o5, b=m9, out=o6);
     Or(a=o6, b=m10, out=o7);
     Or(a=o7, b=m12, out=o8);
-    Or(a=o8, b=m14, out=b);
-    Or(..., ..., out=b);}
+    Or(a=o8, b=m13, out=o9);
+    Or(a=o9, b=m14, out=b);
+}
