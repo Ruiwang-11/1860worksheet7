@@ -3,34 +3,34 @@ CHIP DecoderSegment201890224 {
     OUT b;
 
     PARTS:
-    // Not 反变量
+    // 反变量
     Not(in=A, out=nA);
     Not(in=B, out=nB);
     Not(in=C, out=nC);
     Not(in=D, out=nD);
 
     // t1 = A + ¬B + C + D
-    Or(a=A, b=nB, out=t1_1);
-    Or(a=t1_1, b=C, out=t1_2);
-    Or(a=t1_2, b=D, out=t1);
+    Or(a=A, b=nB, out=w0);
+    Or(a=w0, b=C, out=w1);
+    Or(a=w1, b=D, out=t1);
 
     // t2 = A + B + C + ¬D
-    Or(a=A, b=B, out=t2_1);
-    Or(a=t2_1, b=C, out=t2_2);
-    Or(a=t2_2, b=nD, out=t2);
+    Or(a=A, b=B, out=w2);
+    Or(a=w2, b=C, out=w3);
+    Or(a=w3, b=nD, out=t2);
 
     // t3 = ¬B + ¬C + ¬D
-    Or(a=nB, b=nC, out=t3_1);
-    Or(a=t3_1, b=nD, out=t3);
+    Or(a=nB, b=nC, out=w4);
+    Or(a=w4, b=nD, out=t3);
 
     // t4 = ¬A + B + ¬C + D
-    Or(a=nA, b=B, out=t4_1);
-    Or(a=t4_1, b=nC, out=t4_2);
-    Or(a=t4_2, b=D, out=t4);
+    Or(a=nA, b=B, out=w5);
+    Or(a=w5, b=nC, out=w6);
+    Or(a=w6, b=D, out=t4);
 
-    // 最终输出 b = t1 · t2 · t3 · t4
-    And(a=t1, b=t2, out=b1);
-    And(a=b1, b=t3, out=b2);
-    And(a=b2, b=t4, out=b);
+    // b = t1 · t2 · t3 · t4
+    And(a=t1, b=t2, out=w7);
+    And(a=w7, b=t3, out=w8);
+    And(a=w8, b=t4, out=b);
 }
 
