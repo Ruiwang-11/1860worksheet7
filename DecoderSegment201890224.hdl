@@ -1,6 +1,6 @@
 CHIP DecoderSegment201890224 {
     IN A, B, C, D;
-    OUT b;
+    OUT d;
 
     PARTS:
     Not(in=A, out=nA);
