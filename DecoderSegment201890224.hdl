@@ -8,22 +8,71 @@ CHIP DecoderSegment201890224 {
     Not(in=C, out=nC);
     Not(in=D, out=nD);
 
-    // 对应11个为1的输入
-    And4(a=nA, b=nB, c=nC, d=nD, out=t0);   // 0000
-    And4(a=nA, b=nB, c=C,  d=nD, out=t1);   // 0010
-    And4(a=nA, b=nB, c=C,  d=D,  out=t2);   // 0011
-    And4(a=nA, b=B,  c=nC, d=D,  out=t3);   // 0101
-    And4(a=nA, b=B,  c=C,  d=nD, out=t4);   // 0110
-    And4(a=nA, b=B,  c=C,  d=D,  out=t5);   // 0111
-    And4(a=A,  b=nB, c=nC, d=nD, out=t6);   // 1000
-    And4(a=A,  b=nB, c=nC, d=D,  out=t7);   // 1001
-    And4(a=A,  b=nB, c=C,  d=nD, out=t8);   // 1010
-    And4(a=A,  b=B,  c=nC, d=nD, out=t9);   // 1100
-    And4(a=A,  b=B,  c=C,  d=nD, out=t10);  // 1110
+    // 11组组合的输出
+    // t0 = !A & !B & !C & !D
+    And(a=nA, b=nB, out=w0);
+    And(a=nC, b=nD, out=w1);
+    And(a=w0, b=w1, out=t0);
 
-    // 合并所有 or
-    Or8Way(in[0]=t0, in[1]=t1, in[2]=t2, in[3]=t3, in[4]=t4, in[5]=t5, in[6]=t6, in[7]=t7, out=or1);
-    Or3Way(in[0]=t8, in[1]=t9, in[2]=t10, out=or2);
-    Or(a=or1, b=or2, out=b);
+    // t1 = !A & !B &  C & !D
+    And(a=nA, b=nB, out=w2);
+    And(a=C, b=nD, out=w3);
+    And(a=w2, b=w3, out=t1);
+
+    // t2 = !A & !B &  C &  D
+    And(a=nA, b=nB, out=w4);
+    And(a=C, b=D,  out=w5);
+    And(a=w4, b=w5, out=t2);
+
+    // t3 = !A &  B & !C &  D
+    And(a=nA, b=B,  out=w6);
+    And(a=nC, b=D,  out=w7);
+    And(a=w6, b=w7, out=t3);
+
+    // t4 = !A &  B &  C & !D
+    And(a=nA, b=B,  out=w8);
+    And(a=C,  b=nD, out=w9);
+    And(a=w8, b=w9, out=t4);
+
+    // t5 = !A &  B &  C &  D
+    And(a=nA, b=B,  out=w10);
+    And(a=C,  b=D,  out=w11);
+    And(a=w10, b=w11, out=t5);
+
+    // t6 =  A & !B & !C & !D
+    And(a=A,  b=nB, out=w12);
+    And(a=nC, b=nD, out=w13);
+    And(a=w12, b=w13, out=t6);
+
+    // t7 =  A & !B & !C &  D
+    And(a=A,  b=nB, out=w14);
+    And(a=nC, b=D,  out=w15);
+    And(a=w14, b=w15, out=t7);
+
+    // t8 =  A & !B &  C & !D
+    And(a=A,  b=nB, out=w16);
+    And(a=C,  b=nD, out=w17);
+    And(a=w16, b=w17, out=t8);
+
+    // t9 =  A &  B & !C & !D
+    And(a=A,  b=B,  out=w18);
+    And(a=nC, b=nD, out=w19);
+    And(a=w18, b=w19, out=t9);
+
+    // t10 = A & B & C & !D
+    And(a=A,  b=B,  out=w20);
+    And(a=C,  b=nD, out=w21);
+    And(a=w20, b=w21, out=t10);
+
+    // b = t0 | t1 | ... | t10
+    Or(a=t0, b=t1, out=o1);
+    Or(a=o1, b=t2, out=o2);
+    Or(a=o2, b=t3, out=o3);
+    Or(a=o3, b=t4, out=o4);
+    Or(a=o4, b=t5, out=o5);
+    Or(a=o5, b=t6, out=o6);
+    Or(a=o6, b=t7, out=o7);
+    Or(a=o7, b=t8, out=o8);
+    Or(a=o8, b=t9, out=o9);
+    Or(a=o9, b=t10, out=b);
 }
-
