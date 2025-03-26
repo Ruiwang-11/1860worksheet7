@@ -3,127 +3,127 @@ CHIP Decoder201890224 {
     OUT a, b, c, d, e, f, g;
 
     PARTS:
-    // Not gates
+    // 反变量
     Not(in=A, out=nA);
     Not(in=B, out=nB);
     Not(in=C, out=nC);
     Not(in=D, out=nD);
 
-    /** a = (A + ¬B + C + D)(A + B + C + ¬D)(¬A + ¬B + C + ¬D)(¬A + B + ¬C + ¬D) */
-    Or(a=A, b=nB, out=a1);
-    Or(a=a1, b=C, out=a2);
-    Or(a=a2, b=D, out=t1);
+    // a = (A + ¬B + C + D)(A + B + C + ¬D)(¬A + ¬B + C + ¬D)(¬A + B + ¬C + ¬D)
+    Or(a=A, b=nB, out=w0);
+    Or(a=w0, b=C, out=w1);
+    Or(a=w1, b=D, out=ta1);
 
-    Or(a=A, b=B, out=a3);
-    Or(a=a3, b=C, out=a4);
-    Or(a=a4, b=nD, out=t2);
+    Or(a=A, b=B, out=w2);
+    Or(a=w2, b=C, out=w3);
+    Or(a=w3, b=nD, out=ta2);
 
-    Or(a=nA, b=nB, out=a5);
-    Or(a=a5, b=C, out=a6);
-    Or(a=a6, b=nD, out=t3);
+    Or(a=nA, b=nB, out=w4);
+    Or(a=w4, b=C, out=w5);
+    Or(a=w5, b=nD, out=ta3);
 
-    Or(a=nA, b=B, out=a7);
-    Or(a=a7, b=nC, out=a8);
-    Or(a=a8, b=nD, out=t4);
+    Or(a=nA, b=B, out=w6);
+    Or(a=w6, b=nC, out=w7);
+    Or(a=w7, b=nD, out=ta4);
 
-    And(a=t1, b=t2, out=a_1);
-    And(a=a_1, b=t3, out=a_2);
-    And(a=a_2, b=t4, out=a);
+    And(a=ta1, b=ta2, out=w8);
+    And(a=w8, b=ta3, out=w9);
+    And(a=w9, b=ta4, out=a);
 
-    /** b = (A + ¬B + C + D)(A + B + C + ¬D)(¬B + ¬C + ¬D)(¬A + B + ¬C + D) */
-    Or(a=A, b=nB, out=b1);
-    Or(a=b1, b=C, out=b2);
-    Or(a=b2, b=D, out=u1);
+    // b = (A + ¬B + C + D)(A + B + C + ¬D)(¬B + ¬C + ¬D)(¬A + B + ¬C + D)
+    Or(a=A, b=nB, out=w10);
+    Or(a=w10, b=C, out=w11);
+    Or(a=w11, b=D, out=tb1);
 
-    Or(a=A, b=B, out=b3);
-    Or(a=b3, b=C, out=b4);
-    Or(a=b4, b=nD, out=u2);
+    Or(a=A, b=B, out=w12);
+    Or(a=w12, b=C, out=w13);
+    Or(a=w13, b=nD, out=tb2);
 
-    Or(a=nB, b=nC, out=b5);
-    Or(a=b5, b=nD, out=u3);
+    Or(a=nB, b=nC, out=w14);
+    Or(a=w14, b=nD, out=tb3);
 
-    Or(a=nA, b=B, out=b6);
-    Or(a=b6, b=nC, out=b7);
-    Or(a=b7, b=D, out=u4);
+    Or(a=nA, b=B, out=w15);
+    Or(a=w15, b=nC, out=w16);
+    Or(a=w16, b=D, out=tb4);
 
-    And(a=u1, b=u2, out=b_1);
-    And(a=b_1, b=u3, out=b_2);
-    And(a=b_2, b=u4, out=b);
+    And(a=tb1, b=tb2, out=w17);
+    And(a=w17, b=tb3, out=w18);
+    And(a=w18, b=tb4, out=b);
 
-    /** c = (A + B + ¬C + D)(¬A + ¬B + D)(¬A + ¬B + ¬C) */
-    Or(a=A, b=B, out=c1);
-    Or(a=c1, b=nC, out=c2);
-    Or(a=c2, b=D, out=v1);
+    // c = (A + B + ¬C + D)(¬A + ¬B + D)(¬A + ¬B + ¬C)
+    Or(a=A, b=B, out=w19);
+    Or(a=w19, b=nC, out=w20);
+    Or(a=w20, b=D, out=tc1);
 
-    Or(a=nA, b=nB, out=c3);
-    Or(a=c3, b=D, out=v2);
+    Or(a=nA, b=nB, out=w21);
+    Or(a=w21, b=D, out=tc2);
 
-    Or(a=nA, b=nB, out=c4);
-    Or(a=c4, b=nC, out=v3);
+    Or(a=nA, b=nB, out=w22);
+    Or(a=w22, b=nC, out=tc3);
 
-    And(a=v1, b=v2, out=c_1);
-    And(a=c_1, b=v3, out=c);
+    And(a=tc1, b=tc2, out=w23);
+    And(a=w23, b=tc3, out=c);
 
-    /** d = (A + ¬D)(A + ¬B + C)(B + C + ¬D) */
-    Or(a=A, b=nD, out=w1);
+    // d = (A + ¬D)(A + ¬B + C)(B + C + ¬D)
+    Or(a=A, b=nD, out=td1);
 
-    Or(a=A, b=nB, out=d1);
-    Or(a=d1, b=C, out=w2);
+    Or(a=A, b=nB, out=w24);
+    Or(a=w24, b=C, out=td2);
 
-    Or(a=B, b=C, out=d2);
-    Or(a=d2, b=nD, out=w3);
+    Or(a=B, b=C, out=w25);
+    Or(a=w25, b=nD, out=td3);
 
-    And(a=w1, b=w2, out=d_1);
-    And(a=d_1, b=w3, out=d);
+    And(a=td1, b=td2, out=w26);
+    And(a=w26, b=td3, out=d);
 
-    /** e = (A + ¬B + C + ¬D)(¬B + ¬C + D)(¬A + ¬B + D)(¬A + ¬C + ¬D) */
-    Or(a=A, b=nB, out=e1);
-    Or(a=e1, b=C, out=e2);
-    Or(a=e2, b=nD, out=m1);
+    // e = (A + ¬B + C + ¬D)(¬B + ¬C + D)(¬A + ¬B + D)(¬A + ¬C + ¬D)
+    Or(a=A, b=nB, out=w27);
+    Or(a=w27, b=C, out=w28);
+    Or(a=w28, b=nD, out=te1);
 
-    Or(a=nB, b=nC, out=e3);
-    Or(a=e3, b=D, out=m2);
+    Or(a=nB, b=nC, out=w29);
+    Or(a=w29, b=D, out=te2);
 
-    Or(a=nA, b=nB, out=e4);
-    Or(a=e4, b=D, out=m3);
+    Or(a=nA, b=nB, out=w30);
+    Or(a=w30, b=D, out=te3);
 
-    Or(a=nA, b=nC, out=e5);
-    Or(a=e5, b=nD, out=m4);
+    Or(a=nA, b=nC, out=w31);
+    Or(a=w31, b=nD, out=te4);
 
-    And(a=m1, b=m2, out=e_1);
-    And(a=e_1, b=m3, out=e_2);
-    And(a=e_2, b=m4, out=e);
+    And(a=te1, b=te2, out=w32);
+    And(a=w32, b=te3, out=w33);
+    And(a=w33, b=te4, out=e);
 
-    /** f = (¬A + ¬B + C + ¬D)(A + B + ¬D)(A + B + ¬C)(A + ¬C + ¬D) */
-    Or(a=nA, b=nB, out=f1);
-    Or(a=f1, b=C, out=f2);
-    Or(a=f2, b=nD, out=n1);
+    // f = (¬A + ¬B + C + ¬D)(A + B + ¬D)(A + B + ¬C)(A + ¬C + ¬D)
+    Or(a=nA, b=nB, out=w34);
+    Or(a=w34, b=C, out=w35);
+    Or(a=w35, b=nD, out=tf1);
 
-    Or(a=A, b=B, out=f3);
-    Or(a=f3, b=nD, out=n2);
+    Or(a=A, b=B, out=w36);
+    Or(a=w36, b=nD, out=tf2);
 
-    Or(a=A, b=B, out=f4);
-    Or(a=f4, b=nC, out=n3);
+    Or(a=A, b=B, out=w37);
+    Or(a=w37, b=nC, out=tf3);
 
-    Or(a=A, b=nC, out=f5);
-    Or(a=f5, b=nD, out=n4);
+    Or(a=A, b=nC, out=w38);
+    Or(a=w38, b=nD, out=tf4);
 
-    And(a=n1, b=n2, out=f_1);
-    And(a=f_1, b=n3, out=f_2);
-    And(a=f_2, b=n4, out=f);
+    And(a=tf1, b=tf2, out=w39);
+    And(a=w39, b=tf3, out=w40);
+    And(a=w40, b=tf4, out=f);
 
-    /** g = (A + B + C)(A + ¬B + ¬C + ¬D)(¬A + ¬B + C + D) */
-    Or(a=A, b=B, out=g1);
-    Or(a=g1, b=C, out=g2);
+    // g = (A + B + C)(A + ¬B + ¬C + ¬D)(¬A + ¬B + C + D)
+    Or(a=A, b=B, out=w41);
+    Or(a=w41, b=C, out=tg1);
 
-    Or(a=A, b=nB, out=g3);
-    Or(a=g3, b=nC, out=g4);
-    Or(a=g4, b=nD, out=g5);
+    Or(a=A, b=nB, out=w42);
+    Or(a=w42, b=nC, out=w43);
+    Or(a=w43, b=nD, out=tg2);
 
-    Or(a=nA, b=nB, out=g6);
-    Or(a=g6, b=C, out=g7);
-    Or(a=g7, b=D, out=g8);
+    Or(a=nA, b=nB, out=w44);
+    Or(a=w44, b=C, out=w45);
+    Or(a=w45, b=D, out=tg3);
 
-    And(a=g2, b=g5, out=g_1);
-    And(a=g_1, b=g8, out=g);
+    And(a=tg1, b=tg2, out=w46);
+    And(a=w46, b=tg3, out=g);
 }
