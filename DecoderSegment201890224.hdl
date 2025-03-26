@@ -8,76 +8,82 @@ CHIP DecoderSegment201890224 {
     Not(in=C, out=nC);
     Not(in=D, out=nD);
 
-    // m0: 0000
+    // m0: 0000 → b = 1
     And(a=nA, b=nB, out=w0);
     And(a=nC, b=nD, out=w1);
     And(a=w0, b=w1, out=m0);
 
-    // m2: 0010
+    // m1: 0001 → b = 0
+    // Not connected to b
+
+    // m2: 0010 → b = 1
     And(a=nA, b=nB, out=w2);
     And(a=C, b=nD, out=w3);
     And(a=w2, b=w3, out=m2);
 
-    // m3: 0011
+    // m3: 0011 → b = 1
     And(a=nA, b=nB, out=w4);
     And(a=C, b=D, out=w5);
     And(a=w4, b=w5, out=m3);
 
-    // m5: 0101
+    // m4: 0100 → b = 0
+    // Not connected to b
+
+    // m5: 0101 → b = 1
     And(a=nA, b=B, out=w6);
     And(a=nC, b=D, out=w7);
     And(a=w6, b=w7, out=m5);
 
-    // m6: 0110
+    // m6: 0110 → b = 1
     And(a=nA, b=B, out=w8);
     And(a=C, b=nD, out=w9);
     And(a=w8, b=w9, out=m6);
 
-    // m7: 0111 ← 新增
-    And(a=nA, b=B, out=w20);
-    And(a=C, b=D, out=w21);
-    And(a=w20, b=w21, out=m7);
+    // m7: 0111 → b = 0
+    // Not connected to b
 
-    // m8: 1000
+    // m8: 1000 → b = 1
     And(a=A, b=nB, out=w10);
     And(a=nC, b=nD, out=w11);
     And(a=w10, b=w11, out=m8);
 
-    // m9: 1001
+    // m9: 1001 → b = 1
     And(a=A, b=nB, out=w12);
     And(a=nC, b=D, out=w13);
     And(a=w12, b=w13, out=m9);
 
-    // m10: 1010
+    // m10: 1010 → b = 1
     And(a=A, b=nB, out=w14);
     And(a=C, b=nD, out=w15);
     And(a=w14, b=w15, out=m10);
 
-    // m12: 1100
+    // m11: 1011 → b = 0
+    // Not connected to b
+
+    // m12: 1100 → b = 1
     And(a=A, b=B, out=w16);
     And(a=nC, b=nD, out=w17);
     And(a=w16, b=w17, out=m12);
 
-    // m13: 1101 ← 新增
-    And(a=A, b=B, out=w22);
-    And(a=nC, b=D, out=w23);
-    And(a=w22, b=w23, out=m13);
+    // m13: 1101 → b = 0
+    // Not connected to b
 
-    // m14: 1110
+    // m14: 1110 → b = 1
     And(a=A, b=B, out=w18);
     And(a=C, b=nD, out=w19);
     And(a=w18, b=w19, out=m14);
 
-    // OR 所有有效 minterms
+    // m15: 1111 → b = 0
+    // Not connected to b
+
+    // OR 所有有效 minterms（输出为1的组合）
     Or(a=m0, b=m2, out=o1);
     Or(a=o1, b=m3, out=o2);
     Or(a=o2, b=m5, out=o3);
     Or(a=o3, b=m6, out=o4);
-    Or(a=o4, b=m7, out=o5);     // 添加 m7
-    Or(a=o5, b=m8, out=o6);
-    Or(a=o6, b=m9, out=o7);
-    Or(a=o7, b=m10, out=o8);
-    Or(a=o8, b=m12, out=o9);
-    Or(a=o9, b=m13, out=o10);   // 添加 m13
-    Or(a=o10, b=m14, out=b);
+    Or(a=o4, b=m8, out=o5);
+    Or(a=o5, b=m9, out=o6);
+    Or(a=o6, b=m10, out=o7);
+    Or(a=o7, b=m12, out=o8);
+    Or(a=o8, b=m14, out=b);
 }
